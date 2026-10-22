@@ -31,7 +31,7 @@ export function StorySection() {
         <p className="story-description">
           Hay costumbres que se sienten como estar en casa.<br />
           Una charla sin apuro, el agua a punto y un mate que va de mano en mano.<br />
-          En Raíces, elegimos lo auténtico para acompañarte en esos pequeños grandes momentos.
+          Somos Raíces, una tienda de mates, yerbas y accesorios de General Alvear, Mendoza. Elegimos acompañarte en esos pequeños grandes momentos.
         </p>
         <Link className="button" to="/catalogo">
           Compartí el ritual <ArrowRight aria-hidden="true" />
