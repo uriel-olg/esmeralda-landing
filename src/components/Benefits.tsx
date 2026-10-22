@@ -8,13 +8,13 @@ const benefits = [
   },
   {
     icon: Truck,
-    title: 'Llegamos a todo el país',
-    description: 'Tu próximo ritual, en tu puerta.',
+    title: 'Coordinamos tu entrega',
+    description: 'Consultá las opciones disponibles.',
   },
   {
     icon: CreditCard,
     title: 'Comprá con tranquilidad',
-    description: 'Todos los medios de pago.',
+    description: 'Efectivo, transferencia y más.',
   },
   {
     icon: Heart,

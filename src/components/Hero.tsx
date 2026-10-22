@@ -1,10 +1,10 @@
-import { ArrowRight, CreditCard, Leaf, Sprout, Truck } from 'lucide-react';
+import { ArrowRight, CreditCard, Leaf, MapPin, Sprout } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Link } from 'react-router-dom';
 
 const heroPerks = [
   { icon: Sprout, firstLine: 'Yerbas', secondLine: 'seleccionadas' },
-  { icon: Truck, firstLine: 'Envíos a', secondLine: 'todo el país' },
+  { icon: MapPin, firstLine: 'General Alvear', secondLine: 'Mendoza' },
   { icon: CreditCard, firstLine: 'Pagos', secondLine: 'seguros' },
   { icon: Leaf, firstLine: 'Elegimos', secondLine: 'lo natural' },
 ] as const;
