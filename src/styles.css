@@ -58,13 +58,19 @@
   .brand-leaf { width: 34px; height: 44px; fill: none; color: var(--green); stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
   .brand-name { display: block; font-family: var(--serif); font-size: 39px; line-height: .95; letter-spacing: -1px; font-weight: 600; }
   .brand-sub { font-size: 7px; letter-spacing: 2.6px; display: block; margin-top: 7px; text-transform: uppercase; }
-  .main-nav { @apply flex; gap: 37px; font-size: 12px; }
-  .main-nav a { padding: 9px 0; position: relative; }
+  .main-nav { @apply flex items-center; gap: 25px; font-size: 12px; }
+  .main-nav a { padding: 9px 0; position: relative; white-space: nowrap; }
   .main-nav a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 100%; height: 1px; background: var(--green); transition: right .25s; }
   .main-nav a.active::after { right: 0; }
-  .header-actions { @apply flex items-center; gap: 14px; min-width: 155px; justify-content: flex-end; }
+  .header-actions { @apply flex items-center; gap: 16px; justify-content: flex-end; }
+  .header-catalog { flex-shrink: 0; padding: 11px 18px; gap: 11px; white-space: nowrap; }
   .cart-count { @apply grid place-items-center; position: absolute; right: -3px; top: -2px; border-radius: 50%; font-size: 9px; background: var(--green); color: white; min-width: 18px; height: 18px; border: 2px solid var(--cream); }
   .menu-toggle, .mobile-menu, .mobile-nav-arrow { display: none; }
+  .mobile-menu { position: absolute; left: 0; right: 0; top: 100%; background: var(--cream); padding: 15px 24px 24px; border-bottom: 1px solid var(--line); box-shadow: 0 16px 20px #1d2a1e10; max-height: calc(100dvh - 120px); overflow-y: auto; overscroll-behavior: contain; }
+  .mobile-menu > a { display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; font-size: 14px; border-bottom: 1px solid var(--line); }
+  .mobile-menu > a.active { color: var(--green); font-weight: 500; }
+  .mobile-menu .mobile-catalog { justify-content: center; gap: 12px; margin-top: 20px; padding: 13px 18px; font-size: 12px; border: 0; border-radius: 8px; }
+  .mobile-menu p { font-size: 10px; color: var(--muted); margin-top: 19px; }
 
   /* Home */
   .hero { position: relative; min-height: 620px; isolation: isolate; overflow: hidden; background: #f1eee5; }
@@ -239,7 +245,7 @@
 }
 @media (max-width: 1100px) {
   .container { padding-inline: 30px; }
-  .main-nav { gap: 27px; }
+  .main-nav { gap: 20px; }
   .header-inner { gap: 20px; }
   .hero { min-height: 560px; }
   .hero h1 { font-size: 72px; }
@@ -262,6 +268,12 @@
   .footer-main { gap: 25px; }
   .catalog-grid .product-image { height: 245px; }
 }
+@media (max-width: 1000px) {
+  .main-nav, .header-catalog { display: none; }
+  .menu-toggle { display: grid; }
+  .mobile-menu { display: block; }
+  .mobile-nav-arrow { display: block; width: 16px; height: 16px; }
+}
 @media (max-width: 800px) {
   .container { padding-inline: 24px; }
   .announcement { font-size: 9px; }
@@ -270,13 +282,6 @@
   .brand-sub { font-size: 6px; }
   .brand-leaf { width: 28px; }
   .header-actions { gap: 12px; min-width: 0; }
-  .main-nav { display: none; }
-  .menu-toggle { display: grid; }
-  .mobile-menu { display: block; position: absolute; left: 0; right: 0; top: 78px; background: var(--cream); padding: 15px 24px 24px; border-bottom: 1px solid var(--line); box-shadow: 0 16px 20px #1d2a1e10; }
-  .mobile-menu a { display: flex; align-items: center; justify-content: space-between; padding: 12px 4px; font-size: 14px; border-bottom: 1px solid var(--line); }
-  .mobile-nav-arrow { display: block; width: 16px; height: 16px; }
-  .mobile-menu p { font-size: 10px; color: var(--muted); margin-top: 19px; }
-  .mobile-menu a.active { color: var(--green); font-weight: 500; }
   .hero h1 { font-size: 64px; }
   .hero-description { font-size: 13px; max-width: 310px; }
   .hero-note { display: none; }
@@ -319,7 +324,7 @@
   .brand-sub { letter-spacing: 2px; font-size: 6px; }
   .header-actions { gap: 12px; }
   .header-actions svg { width: 21px; height: 21px; }
-  .mobile-menu { top: 74px; padding-inline: 20px; }
+  .mobile-menu { padding-inline: 20px; }
   .hero { min-height: 0; display: flex; flex-direction: column; }
   .hero-photo { position: relative; order: 2; width: 100%; height: 310px; object-position: 78% 65%; z-index: -2; }
   .hero::after { display: none; }

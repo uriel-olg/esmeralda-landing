@@ -67,6 +67,8 @@ class ShopSmoke(unittest.TestCase):
         self.assertEqual(self.errors, [], "Browser/runtime errors")
 
     def nav(self, name):
+        if name == "Ver catálogo":
+            return self.page.locator(".header-inner").get_by_role("link", name=name, exact=True)
         return self.page.get_by_role("navigation", name="Navegación principal").get_by_role(
             "link", name=name, exact=True)
 
@@ -78,14 +80,16 @@ class ShopSmoke(unittest.TestCase):
         self.assertEqual(
             self.page.get_by_role("navigation", name="Navegación principal")
             .get_by_role("link").all_text_contents(),
-            ["Home", "Productos", "Nosotros", "Catálogo"],
+            ["Inicio", "Nosotros", "Destacados", "Guía matera", "Visitános"],
         )
+        expect(self.nav("Ver catálogo")).to_be_visible()
+        expect(self.nav("Ver catálogo")).to_have_attribute("href", "/catalogo")
         expect(self.page.locator("main .product-grid")).to_have_count(1)
         expect(self.page.locator("main .product-card")).to_have_count(5)
         expect(self.page.locator("#categorias")).to_have_count(0)
 
     def test_catalog_search_gifts_favorites(self):
-        self.nav("Catálogo").click()
+        self.nav("Ver catálogo").click()
         expect(self.page).to_have_url(BASE_URL + "/catalogo")
         expect(self.page.locator(".product-card")).to_have_count(6)
         search = self.page.get_by_label("Buscar productos en el catálogo")
@@ -109,7 +113,7 @@ class ShopSmoke(unittest.TestCase):
 
     def test_cart_quantities_totals_persist(self):
         self.card("Yerba Raíces Selección").get_by_role("button", name="Agregar", exact=False).click()
-        self.nav("Catálogo").click()
+        self.nav("Ver catálogo").click()
         self.page.get_by_role("button", name="Abrir carrito,", exact=False).click()
         cart = self.page.get_by_role("dialog", name="Tu próxima ronda", exact=True)
         expect(cart.locator(".cart-total strong")).to_contain_text("7.900")
@@ -130,12 +134,27 @@ class ShopSmoke(unittest.TestCase):
         self.page.goto(BASE_URL + "/catalogo")
         self.page.reload()
         expect(self.page.locator(".product-card")).to_have_count(6)
-        self.nav("Productos").click()
-        expect(self.page).to_have_url(BASE_URL + "/#productos")
-        expect(self.page.locator("#productos")).to_be_in_viewport()
-        self.page.evaluate("scrollTo(0, 0)")
-        self.nav("Productos").click()
-        expect(self.page.locator("#productos")).to_be_in_viewport()
+        destinations = (("Inicio", "/"), ("Nosotros", "/#nosotros"),
+                        ("Destacados", "/#productos"), ("Guía matera", "/#guia"),
+                        ("Visitános", "/#ubicacion"))
+        for source in ("/catalogo", "/"):
+            for name, destination in destinations:
+                with self.subTest(source=source, destination=destination):
+                    self.page.goto(BASE_URL + source)
+                    link = self.nav(name)
+                    link.click()
+                    expect(self.page).to_have_url(BASE_URL + destination)
+                    expect(link).to_have_attribute("aria-current", "page" if destination == "/" else "location")
+                    if "#" in destination:
+                        target = self.page.locator("#" + destination.split("#")[1])
+                        expect(target).to_be_in_viewport()
+                        self.page.evaluate("scrollTo(0,0)")
+                        link.click()
+                        expect(target).to_be_in_viewport()
+                    else:
+                        self.page.evaluate("scrollTo(0,800)")
+                        link.click()
+                        self.page.wait_for_function("scrollY === 0")
         self.page.locator(".header-inner .brand").click()
         expect(self.page).to_have_url(BASE_URL + "/")
 
@@ -148,10 +167,26 @@ class ShopSmoke(unittest.TestCase):
         self.page.keyboard.press("Escape")
         expect(menu).to_be_hidden()
         expect(toggle).to_be_focused()
+        expect(self.nav("Ver catálogo")).not_to_be_visible()
+        destinations = (("Inicio", "/"), ("Nosotros", "/#nosotros"),
+                        ("Destacados", "/#productos"), ("Guía matera", "/#guia"),
+                        ("Visitános", "/#ubicacion"))
+        for name, destination in destinations:
+            with self.subTest(mobile_destination=destination):
+                self.page.goto(BASE_URL + "/catalogo")
+                toggle.click()
+                menu.get_by_role("link", name=name, exact=True).click()
+                expect(self.page).to_have_url(BASE_URL + destination)
+                expect(menu).to_be_hidden()
+                expect(toggle).to_have_attribute("aria-expanded", "false")
         toggle.click()
-        menu.get_by_role("link", name="Catálogo", exact=True).click()
+        menu.get_by_role("link", name="Ver catálogo", exact=True).click()
         expect(self.page).to_have_url(BASE_URL + "/catalogo")
         expect(menu).to_be_hidden()
+        toggle.click()
+        self.page.set_viewport_size({"width": 1440, "height": 1000})
+        expect(menu).to_be_hidden()
+        expect(self.nav("Ver catálogo")).to_be_visible()
         for path in ("/", "/catalogo"):
             self.page.goto(BASE_URL + path)
             for width in (320, 390, 641, 768, 1024, 1440):
@@ -247,7 +282,7 @@ class ShopSmoke(unittest.TestCase):
             self.page.goto(BASE_URL + "/")
 
     def test_footer_hash_links_repeat_and_catalog_query_focus(self):
-        self.nav("Catálogo").click()
+        self.nav("Ver catálogo").click()
         for label, target in (("Preguntas frecuentes", "preguntas-frecuentes"),
                               ("Entregas", "faq-envios"), ("Cambios y devoluciones", "faq-cambios")):
             link = self.page.locator("footer").get_by_role("link", name=label, exact=True)
@@ -260,7 +295,7 @@ class ShopSmoke(unittest.TestCase):
             self.page.evaluate("scrollTo(0,0)")
             link.click()
             expect(section).to_be_in_viewport()
-        self.nav("Catálogo").click()
+        self.nav("Ver catálogo").click()
         search = self.page.get_by_label("Buscar productos en el catálogo")
         search.scroll_into_view_if_needed()
         self.page.evaluate("scrollTo(0,200)")

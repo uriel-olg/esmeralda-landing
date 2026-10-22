@@ -5,10 +5,11 @@ import { Brand } from './Brand';
 import { useShop } from '../context/ShopContext';
 
 const navigation = [
-  { label: 'Home', to: '/' },
-  { label: 'Productos', to: '/#productos' },
+  { label: 'Inicio', to: '/' },
   { label: 'Nosotros', to: '/#nosotros' },
-  { label: 'Catálogo', to: '/catalogo' },
+  { label: 'Destacados', to: '/#productos' },
+  { label: 'Guía matera', to: '/#guia' },
+  { label: 'Visitános', to: '/#ubicacion' },
 ];
 
 export function Navbar() {
@@ -27,7 +28,7 @@ export function Navbar() {
     const onClick = (event: PointerEvent) => {
       if (event.target instanceof Node && !menu.current?.contains(event.target) && !toggle.current?.contains(event.target)) setMenuOpen(false);
     };
-    const resize = () => { if (window.innerWidth > 800) setMenuOpen(false); };
+    const resize = () => { if (window.innerWidth > 1000) setMenuOpen(false); };
     document.addEventListener('keydown', onKey);
     document.addEventListener('pointerdown', onClick);
     window.addEventListener('resize', resize);
@@ -56,11 +57,20 @@ export function Navbar() {
           <Brand />
           <nav className="main-nav" aria-label="Navegación principal">{links}</nav>
           <div className="header-actions">
+            <Link className="button button-primary header-catalog" to="/catalogo" aria-current={location.pathname === '/catalogo' ? 'page' : undefined}>
+              Ver catálogo <ArrowRight aria-hidden="true" />
+            </Link>
             <button className="icon-button cart-trigger" onClick={openCart} aria-label={`Abrir carrito, ${cartCount} ${cartCount === 1 ? 'producto' : 'productos'}`} aria-haspopup="dialog"><ShoppingCart aria-hidden="true" /><span className="cart-count" aria-hidden="true">{cartCount}</span></button>
             <button ref={toggle} className="icon-button menu-toggle" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={menuOpen} aria-controls="mobile-menu">{menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
           </div>
         </div>
-        <nav ref={menu} className="mobile-menu" id="mobile-menu" aria-label="Navegación móvil" hidden={!menuOpen}>{links}<p>Un buen mate siempre es un buen comienzo.</p></nav>
+        <nav ref={menu} className="mobile-menu" id="mobile-menu" aria-label="Navegación móvil" hidden={!menuOpen}>
+          {links}
+          <Link className="button button-primary mobile-catalog" to="/catalogo" onClick={() => setMenuOpen(false)} aria-current={location.pathname === '/catalogo' ? 'page' : undefined}>
+            Ver catálogo <ArrowRight aria-hidden="true" />
+          </Link>
+          <p>Un buen mate siempre es un buen comienzo.</p>
+        </nav>
       </header>
     </>
   );

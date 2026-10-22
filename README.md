@@ -36,7 +36,7 @@ La suite comprueba la estructura de Home, el catálogo y los favoritos, el carri
 - `/`: todas las secciones de la landing en una misma ruta: hero, **una única sección de productos favoritos**, beneficios, Nosotros, historia de la tienda y tipos de productos, guía matera, regalos, medios de pago, preguntas frecuentes, newsletter y ubicación como último bloque antes del footer.
 - `/catalogo`: catálogo con búsqueda, categorías, productos guardados, orden y estados vacíos.
 - La información de la tienda no tiene rutas separadas: la navegación y el footer llevan a anclas de Home. Los enlaces a entregas y cambios también abren la respuesta correspondiente dentro de las preguntas frecuentes.
-- Navbar: logo, Home, Productos, Nosotros y Catálogo; carrito y menú móvil como controles auxiliares.
+- Navbar: logo, Inicio, Nosotros, Destacados, Guía matera y Visitános; **Ver catálogo** como botón destacado y carrito a la derecha. Hasta 1000 px, los cinco enlaces y el botón al catálogo se agrupan dentro del menú móvil. Medios de pago, FAQ y regalos siguen accesibles desde el contenido y el footer.
 - `src/components/`: secciones reutilizables, navegación, tarjetas, imágenes, modales, carrito y notificaciones.
 - `src/data/products.ts`: productos tipados y precios de ejemplo en pesos argentinos; `featured` controla la selección de Home.
 - `src/data/faqs.ts`: preguntas y respuestas de elección, preparación y cuidado del mate.
@@ -46,7 +46,6 @@ La suite comprueba la estructura de Home, el catálogo y los favoritos, el carri
 - `src/context/ShopContext.tsx`: carrito y favoritos persistentes con validación de datos locales.
 - `src/styles.css`: Tailwind CSS v4, tokens del diseño y estilos responsive por componente.
 - `public/images/` y `public/fonts/`: fotografías WebP y fuentes locales. Google Maps es la única integración externa opcional y carga de forma diferida al configurar una dirección.
-- `preview/`: prototipo anterior conservado como referencia del diseño aprobado; la aplicación actual está en `src/`.
 
 ## Interacciones y accesibilidad
 
