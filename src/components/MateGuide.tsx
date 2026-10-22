@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { ArrowRight, Droplets, Leaf, Sprout, ThermometerSun, type LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { container, eyebrow, textLink } from '../styles/ui';
 
 type GuideStep = {
   title: string;
@@ -132,16 +133,16 @@ export function MateGuide() {
   }
 
   return (
-    <section className="mate-guide" id="guia" aria-labelledby={`${prefix}-title`}>
-      <div className="container guide-layout">
+    <section className="mate-guide border-b border-line bg-[#f4f2e9] py-[72px] tablet:py-[48px] mobile:py-[36px]" id="guia" aria-labelledby={`${prefix}-title`}>
+      <div className={`${container} guide-layout grid grid-cols-[.85fr_1.3fr] items-start gap-[75px] compact:gap-[45px] tablet:grid-cols-[1fr_1.35fr] tablet:gap-[28px] mobile:grid-cols-1 mobile:gap-[27px]`}>
         <div className="guide-intro">
-          <p className="eyebrow">Un poquito de saber matero</p>
-          <h2 id={`${prefix}-title`}>Tu ritual,<br /><em>a tu manera.</em></h2>
-          <p>No hay una sola manera de tomar mate. Hay pequeños detalles que te ayudan a encontrar la tuya, desde la primera cebada.</p>
-          <div className="guide-tabs" role="tablist" aria-label="Guía para disfrutar tu mate" aria-orientation={verticalTabs ? 'vertical' : 'horizontal'}>
+          <p className={`eyebrow ${eyebrow} mobile:text-[8px] mobile:tracking-[1.7px]`}>Un poquito de saber matero</p>
+          <h2 className="mt-[15px] mb-[19px] text-[52px] leading-[1.03] tablet:text-[45px] mobile:mt-[13px] mobile:mb-[16px] mobile:text-[43px]" id={`${prefix}-title`}>Tu ritual,<br /><em className="font-medium text-forest">a tu manera.</em></h2>
+          <p className="max-w-[320px] text-[13px] leading-[1.85] text-muted tablet:text-[12px] mobile:max-w-[340px]">No hay una sola manera de tomar mate. Hay pequeños detalles que te ayudan a encontrar la tuya, desde la primera cebada.</p>
+          <div className="guide-tabs mt-[26px] flex max-w-[330px] flex-col gap-[8px] mobile:mt-[21px] mobile:max-w-none mobile:flex-row mobile:gap-[5px]" role="tablist" aria-label="Guía para disfrutar tu mate" aria-orientation={verticalTabs ? 'vertical' : 'horizontal'}>
             {guideTopics.map(({ id, label, icon: Icon }, index) => (
               <button
-                className={`guide-tab${activeIndex === index ? ' active' : ''}`}
+                className={`guide-tab flex items-center gap-[12px] rounded-[7px] border px-[15px] py-[13px] text-left text-[12px] [transition:background_.2s,border-color_.2s] tablet:gap-[9px] tablet:p-[12px] tablet:text-[11px] mobile:min-w-0 mobile:flex-1 mobile:justify-center mobile:gap-[6px] mobile:px-[6px] mobile:py-[11px] mobile:text-[9px] mobile:leading-[1.5] small:flex-col small:gap-[5px] ${activeIndex === index ? 'active border-forest bg-forest text-paper' : 'border-transparent bg-transparent text-[#56644f] [&:hover]:border-[#d4dccb] [&:hover]:bg-[#e8ecdf]'}`}
                 id={`${prefix}-tab-${id}`}
                 key={id}
                 ref={(element) => { tabRefs.current[index] = element; }}
@@ -153,9 +154,9 @@ export function MateGuide() {
                 onClick={() => setActiveIndex(index)}
                 onKeyDown={(event) => handleTabKeyDown(event, index)}
               >
-                <Icon aria-hidden="true" />
+                <Icon className="h-[20px] w-[20px] mobile:h-[17px] mobile:w-[17px]" aria-hidden="true" />
                 <span>{label}</span>
-                <ArrowRight aria-hidden="true" />
+                <ArrowRight className="ml-auto h-[16px] w-[16px] mobile:hidden" aria-hidden="true" />
               </button>
             ))}
           </div>
@@ -164,7 +165,7 @@ export function MateGuide() {
         <div className="guide-content">
           {guideTopics.map((topic, index) => (
             <div
-              className="guide-panel"
+              className="guide-panel min-h-[453px] rounded-[14px] border border-[#e3e5d7] bg-paper px-[33px] pt-[30px] pb-[25px] focus-visible:outline-2 focus-visible:outline-offset-[5px] focus-visible:outline-olive compact:p-[27px] tablet:min-h-[490px] tablet:px-[22px] tablet:py-[24px] mobile:min-h-[450px] mobile:px-[20px] mobile:pt-[24px] mobile:pb-[21px] small:px-[17px]"
               id={`${prefix}-panel-${topic.id}`}
               key={topic.id}
               role="tabpanel"
@@ -172,21 +173,21 @@ export function MateGuide() {
               hidden={activeIndex !== index}
               tabIndex={0}
             >
-              <h3>{topic.heading}</h3>
-              <ol className="guide-steps">
+              <h3 className="mb-[25px] font-display text-[29px] leading-[1.15] font-medium tracking-[-.4px] tablet:text-[27px] mobile:mb-[23px] mobile:text-[28px]">{topic.heading}</h3>
+              <ol className="guide-steps flex list-none flex-col gap-[21px] p-0 mobile:gap-[20px]">
                 {topic.steps.map((step, stepIndex) => (
-                  <li className="guide-step" key={step.title}>
-                    <span className="guide-number" aria-hidden="true">0{stepIndex + 1}</span>
+                  <li className="guide-step flex items-start gap-[17px] tablet:gap-[11px] mobile:gap-[13px]" key={step.title}>
+                    <span className="guide-number pt-[1px] font-display text-[30px] leading-none font-medium text-[#9ba585] tablet:text-[27px]" aria-hidden="true">0{stepIndex + 1}</span>
                     <div className="guide-step-copy">
-                      <h4>{step.title}</h4>
-                      <p>{step.description}</p>
+                      <h4 className="mb-[4px] text-[12px] font-medium">{step.title}</h4>
+                      <p className="text-[12px] leading-[1.85] text-muted tablet:text-[11px]">{step.description}</p>
                     </div>
                   </li>
                 ))}
               </ol>
-              <p className="guide-tip"><Leaf aria-hidden="true" /><span>{topic.tip}</span></p>
-              <div className="guide-actions">
-                <Link className="text-link" to={topic.link}>{topic.linkLabel}<ArrowRight aria-hidden="true" /></Link>
+              <p className="guide-tip mt-[22px] flex items-start gap-[9px] border-t border-line pt-[17px] text-[10px] leading-[1.75] text-olive"><Leaf className="mt-[2px] h-[16px] w-[16px]" aria-hidden="true" /><span>{topic.tip}</span></p>
+              <div className="guide-actions mt-[10px] pl-[25px]">
+                <Link className={`text-link ${textLink}`} to={topic.link}>{topic.linkLabel}<ArrowRight aria-hidden="true" /></Link>
               </div>
             </div>
           ))}

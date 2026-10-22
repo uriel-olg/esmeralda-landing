@@ -44,8 +44,15 @@ La suite comprueba la estructura de Home, el catálogo y los favoritos, el carri
 - `src/data/paymentMethods.ts`: efectivo, transferencia, Mercado Pago y tarjetas, confirmados por el usuario. No configura un procesador de pagos.
 - `src/data/storeLocation.ts`: dirección, ciudad y horarios confirmados por el usuario.
 - `src/context/ShopContext.tsx`: carrito y favoritos persistentes con validación de datos locales.
-- `src/styles.css`: Tailwind CSS v4, tokens del diseño y estilos responsive por componente.
+- `src/styles.css`: entrada de Tailwind CSS v4, fuentes locales, tokens y estilos globales de accesibilidad.
+- `src/styles/ui.ts`: composiciones reutilizables de utilidades Tailwind para contenedores, botones y encabezados; cada componente define su presentación y estados responsive en `className`.
 - `public/images/` y `public/fonts/`: fotografías WebP y fuentes locales. Google Maps es la única integración externa opcional y carga de forma diferida al configurar una dirección.
+
+## Estilos con Tailwind CSS v4
+
+Tailwind se integra con Vite mediante `@tailwindcss/vite`; no requiere un archivo de configuración JavaScript. `@theme` centraliza los colores y las familias tipográficas. Los componentes usan utilidades para tamaños, espaciados, estados, pseudo-elementos y responsive, conservando los valores del diseño aprobado.
+
+Las variantes `wide` (desde 1500 px), `compact` (hasta 1100 px), `menu` (hasta 1000 px), `tablet` (hasta 800 px), `mobile` (hasta 640 px) y `small` (hasta 360 px) mantienen los puntos de adaptación originales. `fine` limita los efectos de hover que lo requieren a dispositivos compatibles. Las clases descriptivas como `product-card` o `hero` se conservan como referencias semánticas para las pruebas; no dependen de reglas CSS de componente.
 
 ## Interacciones y accesibilidad
 
